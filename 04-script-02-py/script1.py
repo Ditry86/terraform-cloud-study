@@ -2,6 +2,7 @@
 
 import os
 
+
 path="/home/ditry/study/devops-netology"
 bash_command = ["cd "+path, "git status -u"]
 result_os = os.popen(' && '.join(bash_command)).read()
