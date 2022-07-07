@@ -127,7 +127,7 @@ echo "Done"
 ### Ваш скрипт:
 ```bash
 #!/usr/bin/env bash
-regex="([04-script-01-bash])(.*){11}"
+regex="\[04\-script\-01\-bash\].{0,11}"
 error_msg="Aborting commit. Your commit message is missing regex"
 
 if ! grep -iqE "$regex" "$1"; then
