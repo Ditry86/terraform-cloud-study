@@ -17,5 +17,3 @@ for result in result_os.split('\n'):
         prepare_result = result.replace('\t'+is_change+':   ', '\t'+is_change+'/home/ditry/study/devops-netology')
         print(result)
         is_change=False
-    #else :
-     #   break
