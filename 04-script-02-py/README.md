@@ -112,16 +112,58 @@ ditry@work-pc:~/study/devops-netology/04-script-02-py$ ./script2.py /home/ditry/
 ```
 
 ## Обязательная задача 4
-1. Наша команда разрабатывает несколько веб-сервисов, доступных по http. Мы точно знаем, что на их стенде нет никакой балансировки, кластеризации, за DNS прячется конкретный IP сервера, где установлен сервис. Проблема в том, что отдел, занимающийся нашей инфраструктурой очень часто меняет нам сервера, поэтому IP меняются примерно раз в неделю, при этом сервисы сохраняют за собой DNS имена. Это бы совсем никого не беспокоило, если бы несколько раз сервера не уезжали в такой сегмент сети нашей компании, который недоступен для разработчиков. Мы хотим написать скрипт, который опрашивает веб-сервисы, получает их IP, выводит информацию в стандартный вывод в виде: <URL сервиса> - <его IP>. Также, должна быть реализована возможность проверки текущего IP сервиса c его IP из предыдущей проверки. Если проверка будет провалена - оповестить об этом в стандартный вывод сообщением: [ERROR] <URL сервиса> IP mismatch: <старый IP> <Новый IP>. Будем считать, что наша разработка реализовала сервисы: `drive.google.com`, `mail.google.com`, `google.com`.
+1. Наша команда разрабатывает несколько веб-сервисов, доступных по http. Мы точно знаем, что на их стенде нет никакой балансировки, кластеризации, за   DNS прячется конкретный IP сервера, где установлен сервис. Проблема в том, что отдел, занимающийся нашей инфраструктурой очень часто меняет нам сервера, поэтому IP меняются примерно раз в неделю, при этом сервисы сохраняют за собой DNS имена. Это бы совсем никого не беспокоило, если бы несколько раз сервера не уезжали в такой сегмент сети нашей компании, который недоступен для разработчиков. Мы хотим написать скрипт, который опрашивает веб-сервисы, получает их IP, выводит информацию в стандартный вывод в виде: <URL сервиса> - <его IP>. Также, должна быть реализована возможность проверки текущего IP сервиса c его IP из предыдущей проверки. Если проверка будет провалена - оповестить об этом в стандартный вывод сообщением: [ERROR] <URL сервиса> IP mismatch: <старый IP> <Новый IP>. Будем считать, что наша разработка реализовала сервисы: `drive.google.com`, `mail.google.com`, `google.com`.
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+from math import e
+import os
+from pydoc import doc
+import sys
+import socket
+
+#Get hosts names from args. Init host responses list
+HOSTS=sys.argv[1:]
+hosts_resp=[]
+hosts_from_file=[]
+
+#Write head record to log
+with open('hosts.log','a') as log:
+    log.write('\n'+'======= START TESTING HOSTS =======\n')
+#Get hosts info
+for host in HOSTS:
+    hosts_resp.append((host,socket.gethostbyname(host)))
+#Comparison recieved current IP from hosts with hosts IP's recieved before seved in local file
+#Print print results to stdout
+if os.path.exists('hosts'):
+    with open("hosts", 'r') as hosts_file:
+        for host in hosts_file.read().split(' ; '):
+            hosts_from_file.append(tuple(host.split(' ')))
+    i=0
+    while i<len(hosts_resp):
+        if hosts_resp[i][1]==hosts_from_file[i][1]:
+            text='\nHost name: '+hosts_resp[i][0]+'\r\t\t\t\tIP: '+hosts_resp[i][1]+'\r\t\t\t\t\t\t\tIs OK! Without changes'
+        else:
+            text='\nHost - '+hosts_resp[i][0]+'\t: IP - '+hosts_resp[i][1]+' differs from the '+hosts_from_file[i][1]+' received earlier!!!'
+        i+=1
+        print(text)
+#Save new hosts data in local file 
+with open('hosts','w') as hosts_file:
+        hosts=[' '.join(host) for host in hosts_resp]
+        hosts_file.write(' ; '.join(hosts))
+
+
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+Host name: drive.google.com     IP: 173.194.221.194     Is OK! Without changes
+
+Host - mail.google.com  : IP - 108.177.14.17 differs from the 108.177.14.19 received earlier!!!
+
+Host - myweb.ru : IP - 127.0.0.3 differs from the 192.138.159.3 received earlier!!!
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению

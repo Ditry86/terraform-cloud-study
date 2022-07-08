@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-from math import e
 import os
-from pydoc import doc
 import sys
 import socket
 
