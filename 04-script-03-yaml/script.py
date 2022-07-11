@@ -38,8 +38,8 @@ if os.path.exists(file_name):
             hosts_list['Before']=json.load(file)
     else:
         sys.exit('Bad param')
-    i=0
     x=1
+i=0
 if x!=0:
 #Compare "Current" and "Before" hosts info lists. Print results
     while i<len(hosts_list['Current']):
@@ -51,8 +51,11 @@ if x!=0:
         i+=1
         print(text)
 else:
+    i=0
     while i<len(hosts_list['Current']):
-        text='\n'+hosts_list['Current'][i][HOSTS[i]]+'\r\t\t\t\t\tIs OK!'
+        text='\n'+hosts_list['Current'][i][HOSTS[i]]+'\r\t\t\tIs OK!'
+        print(text)
+        i+=1
 #Save hosts info to format (yaml,json) file
 if lang=='yaml':
     with open(file_name,'w') as file:
