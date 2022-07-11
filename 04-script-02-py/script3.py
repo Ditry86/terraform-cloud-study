@@ -1,38 +1,43 @@
 #!/usr/bin/env python3
 
-import os
-import sys
+import os, sys
+import string
 import socket
+import yaml, json
+
 
 #Get hosts names from args. Init host responses list
 HOSTS=sys.argv[1:]
-hosts_resp=[]
-hosts_from_file=[]
+#Init disct with hosts list (current hosts info and hosts info saved before for comparison)
+hosts_list={'Current':[],'Before':[]}
+#Init mark that indicates whether to write to the file
+x=0
 
-#Write head record to log
-with open('hosts.log','a') as log:
-    log.write('\n'+'======= START TESTING HOSTS =======\n')
 #Get hosts info
 for host in HOSTS:
-    hosts_resp.append((host,socket.gethostbyname(host)))
-print(hosts_resp)
-#Comparison recieved current IP from hosts with hosts IP's recieved before seved in local file
+    hosts_list['Current'].append({'host':host,'IP':socket.gethostbyname(host)})
+#Comparison recieved current IP from hosts with hosts IP's recieved before seved in local file "hosts"
 #Print print results to stdout
-if os.path.exists('hosts'):
+if os.path.exists('hosts') and os.stat('hosts').st_size!=0:
+#Read hosts records from file "hosts" and write them to 'Before' item of hosts_list dict
     with open("hosts", 'r') as hosts_file:
         for host in hosts_file.read().split(' ; '):
-            hosts_from_file.append(tuple(host.split(' ')))
-    print(hosts_from_file)
+            items=(host.split(' '))
+            hosts_list['Before'].append({'host':items[0],'IP':items[1]})
     i=0
-    while i<len(hosts_resp):
-        if hosts_resp[i][1]==hosts_from_file[i][1]:
-            text='\nHost name: '+hosts_resp[i][0]+'\r\t\t\t\tIP: '+hosts_resp[i][1]+'\r\t\t\t\t\t\t\tIs OK! Without changes'
+#Compare "Current" and "Before" hosts info lists
+    while i<len(hosts_list['Current']):
+        if hosts_list['Current'][i]['IP']==hosts_list['Before'][i]['IP']:
+            text='\nHost name: '+hosts_list['Current'][i]['host']+'\r\t\t\t\tIP: '+hosts_list['Current'][i]['IP']+'\r\t\t\t\t\t\t\tIs OK! Without changes'
         else:
-            text='\nHost - '+hosts_resp[i][0]+'\t: IP - '+hosts_resp[i][1]+' differs from the '+hosts_from_file[i][1]+' received earlier!!!'
+            text='\nHost - '+hosts_list['Current'][i]['host']+': IP - '+hosts_list['Current'][i]['IP']+' differs from the '+hosts_list['Before'][i]['IP']+' received earlier!!!'
+            x=1
         i+=1
         print(text)
+else:
+    x=1
 #Save new hosts data in local file 
-with open('hosts','w') as hosts_file:
-        hosts=[' '.join(host) for host in hosts_resp]
-        hosts_file.write(' ; '.join(hosts))
-
+if x==1:
+    with open('hosts','w') as hosts_file:
+            hosts=[host['host']+' '+host['IP'] for host in hosts_list['Current']]
+            hosts_file.write(' ; '.join(hosts))
