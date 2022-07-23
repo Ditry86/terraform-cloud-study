@@ -104,11 +104,30 @@ https://hub.docker.com/r/ditry86/nginx
 - Добавьте еще один файл в папку ```/data``` на хостовой машине;
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в ```/data``` контейнера.
 
+### **Ответ**
+
+```
+$ docker run -d -t -v /data:/var/data --name my_centos centos
+8e5754bc9aca45b20093dd400a71716d3b9bb796785e9df9c6afd09332fe2174
+$ docker run -d -t -v /data:/data --name my_debian debian
+e5a58370f4e4c57b38c8f64aee3ef355bcb0a43ff563ccd74d1984d542c2a7e4
+$ docker exec my_centos touch /data/111
+$ touch 222
+$ docker exec my_debian ls -l /data
+total 0
+-rw-r--r-- 1 root root 0 Jul 23 12:43 111
+-rw-r--r-- 1 root root 0 Jul 23 12:44 222
+```
+
 ## Задача 4 (*)
 
 Воспроизвести практическую часть лекции самостоятельно.
 
 Соберите Docker образ с Ansible, загрузите на Docker Hub и пришлите ссылку вместе с остальными ответами к задачам.
+
+### **Ответ**
+
+https://hub.docker.com/repository/docker/ditry86/ansble
 
 
 ---
