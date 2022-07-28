@@ -30,7 +30,9 @@
 - Скриншот страницы, как на слайде из презентации (слайд 37).
 
 ### **Ответ:**
-[Yandex Cloude Compute Images Screen](/05-virt-04-docker-compose/screenshot.png)
+<p align="center">
+  <img width="1200" height="600" src="./screenshot1.png">
+</p>
 
 ## Задача 2
 
@@ -40,11 +42,14 @@
 - Скриншот страницы свойств созданной ВМ, как на примере ниже:
 
 <p align="center">
-  <img width="1200" height="600" src="./assets/yc_01.png">
+  <img width="1200" height="600" src="https://github.com/netology-code/virt-homeworks/blob/virt-11/05-virt-04-docker-compose/assets/yc_01.png">
 </p>
 
 ### **Ответ:**
-[Yandex Cloude Compute VM Screen](/05-virt-04-docker-compose/screenshot1.png)
+
+<p align="center">
+  <img width="1200" height="600" src="./screenshot1.png">
+</p>
 
 ## Задача 3
 
