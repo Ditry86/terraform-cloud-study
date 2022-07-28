@@ -30,8 +30,7 @@
 - Скриншот страницы, как на слайде из презентации (слайд 37).
 
 ### **Ответ:**
-
-![Yandex Cloude Compute Images Screen](/05-virt-04-docker-compose/screenshot.png)
+[Yandex Cloude Compute Images Screen](/05-virt-04-docker-compose/screenshot.png)
 
 ## Задача 2
 
@@ -44,11 +43,14 @@
   <img width="1200" height="600" src="./assets/yc_01.png">
 </p>
 
+### **Ответ:**
+[Yandex Cloude Compute VM Screen](/05-virt-04-docker-compose/screenshot1.png)
+
 ## Задача 3
 
 Создать ваш первый готовый к боевой эксплуатации компонент мониторинга, состоящий из стека микросервисов.
 
-Для получения зачета, вам необходимо предоставить:
+  Для получения зачета, вам необходимо предоставить:
 - Скриншот работающего веб-интерфейса Grafana с текущими метриками, как на примере ниже
 <p align="center">
   <img width="1200" height="600" src="./assets/yc_02.png">
