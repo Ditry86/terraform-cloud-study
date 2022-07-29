@@ -31,7 +31,7 @@
 
 ### **Ответ:**
 <p align="center">
-  <img width="1200" height="600" src="./screenshot1.png">
+  <img width="1200" height="600" src="./screen1.png">
 </p>
 
 ## Задача 2
@@ -48,7 +48,7 @@
 ### **Ответ:**
 
 <p align="center">
-  <img width="1200" height="600" src="./screenshot1.png">
+  <img width="1200" height="600" src="./screen2.png">
 </p>
 
 ## Задача 3
@@ -59,6 +59,12 @@
 - Скриншот работающего веб-интерфейса Grafana с текущими метриками, как на примере ниже
 <p align="center">
   <img width="1200" height="600" src="./assets/yc_02.png">
+</p>
+
+### **Ответ:**
+
+<p align="center">
+  <img width="1200" height="600" src="./screen3.png">
 </p>
 
 ## Задача 4 (*)
