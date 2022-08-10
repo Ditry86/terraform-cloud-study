@@ -48,6 +48,7 @@ Docker-compose манифест - [Ссылка](./postgresql.yaml)
 
 ### **Ответ:**
 
+
 - Список БД:
 ```
 test_db=# \l
