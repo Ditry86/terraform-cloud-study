@@ -78,9 +78,38 @@ test_db=# \d
  public | orders_id_seq  | sequence | postgres
 (4 rows)
 ```
-SELECT table_name, grantee, privilege_type 
+
+- SQL-запрос и полученный список пользователей с правами над таблицами test_db:
+
+```
+test_db=# SELECT table_name, grantee, privilege_type 
 FROM (SELECT * FROM information_schema.role_table_grants WHERE grantee NOT IN ('postgres','PUBLIC')) AS sel_rol
-WHERE table_catalog = 'test_db'
+WHERE table_catalog = 'test_db';
+ table_name |     grantee      | privilege_type 
+------------+------------------+----------------
+ orders     | test-admin-user  | INSERT
+ orders     | test-admin-user  | SELECT
+ orders     | test-admin-user  | UPDATE
+ orders     | test-admin-user  | DELETE
+ orders     | test-admin-user  | TRUNCATE
+ orders     | test-admin-user  | REFERENCES
+ orders     | test-admin-user  | TRIGGER
+ clients    | test-admin-user  | INSERT
+ clients    | test-admin-user  | SELECT
+ clients    | test-admin-user  | UPDATE
+ clients    | test-admin-user  | DELETE
+ clients    | test-admin-user  | TRUNCATE
+ clients    | test-admin-user  | REFERENCES
+ clients    | test-admin-user  | TRIGGER
+ orders     | test-simple-user | INSERT
+ orders     | test-simple-user | SELECT
+ orders     | test-simple-user | UPDATE
+ orders     | test-simple-user | DELETE
+ clients    | test-simple-user | INSERT
+ clients    | test-simple-user | SELECT
+ clients    | test-simple-user | UPDATE
+ clients    | test-simple-user | DELETE
+(22 rows)
 ```
 
 ## Задача 3
