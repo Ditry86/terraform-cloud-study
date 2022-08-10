@@ -1,0 +1,21 @@
+version: '2.1'
+
+volumes:
+    data_vol: {}
+    backup_vol: {}
+
+services:
+
+  postgres:
+    image: postgres
+    container_name: postgresql
+    volumes:
+      - data_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: qwertyuiop
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
