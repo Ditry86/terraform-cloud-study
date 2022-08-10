@@ -65,6 +65,19 @@ test_db=# \l
            |          |          |            |            | "test-simple-user"=CTc/postgres
 (4 rows)
 ```
+
+- Список таблиц БД test_db:
+```
+test_db=# \d
+               List of relations
+ Schema |      Name      |   Type   |  Owner   
+--------+----------------+----------+----------
+ public | clients        | table    | postgres
+ public | clients_id_seq | sequence | postgres
+ public | orders         | table    | postgres
+ public | orders_id_seq  | sequence | postgres
+(4 rows)
+```
 SELECT table_name, grantee, privilege_type 
 FROM (SELECT * FROM information_schema.role_table_grants WHERE grantee NOT IN ('postgres','PUBLIC')) AS sel_rol
 WHERE table_catalog = 'test_db'
