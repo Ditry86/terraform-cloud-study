@@ -8,9 +8,8 @@ services:
 
   postgres:
     image: postgres
-    container_name: postgresql
+    container_name: postgresql_2
     volumes:
-      - data_vol:/var/lib/postgresql/data
       - backup_vol:/tmp/
     environment:
       POSTGRES_PASSWORD: qwertyuiop
