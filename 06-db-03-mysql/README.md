@@ -120,7 +120,9 @@ mysql> SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE table_sche
 
 Приведите в ответе измененный файл `my.cnf`.
 
+### **Ответ:**
 
+My.cnf файл - [Ссылка](./my.cnf)
 
 ---
 
