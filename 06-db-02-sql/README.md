@@ -235,14 +235,16 @@ id | orders |       customer       | country
 ### **Ответ:**
 
 ```
-# explain analyze verbose select * from clients;
+# EXPLAIN ANALYZE VERBOSE SELECT * FROM clients WHERE orders IS NOT NULL;
                                                  QUERY PLAN                                                 
 ------------------------------------------------------------------------------------------------------------
- Seq Scan on public.clients  (cost=0.00..18.10 rows=810 width=72) (actual time=0.024..0.027 rows=5 loops=1)
+ Seq Scan on public.clients  (cost=0.00..18.10 rows=806 width=72) (actual time=0.015..0.016 rows=3 loops=1)
    Output: id, orders, customer, country
- Planning Time: 4.279 ms
- Execution Time: 0.455 ms
-(4 rows)
+   Filter: (clients.orders IS NOT NULL)
+   Rows Removed by Filter: 2
+ Planning Time: 0.164 ms
+ Execution Time: 0.034 ms
+(6 rows)
 ```
 
 ## Задача 6
