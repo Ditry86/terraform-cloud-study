@@ -106,6 +106,19 @@ mysql> SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE table_sche
 | clients    | InnoDB |
 | orders     | InnoDB |
 +------------+--------+
+...
+mysql> show profiles;
++----------+------------+-----------------------------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                                                   |
++----------+------------+-----------------------------------------------------------------------------------------+
+|        1 | 0.00074750 | SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'test_db' |
+|        2 | 0.02596850 | alter table orders engine = 'MyISAM'                                                    |
+|        3 | 0.02057700 | alter table clients engine = 'MyISAM'                                                   |
+|        4 | 0.00086150 | SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'test_db' |
+|        5 | 0.03037825 | alter table orders engine = 'InnoDB'                                                    |
+|        6 | 0.03919850 | alter table clients engine = 'InnoDB'                                                   |
+|        7 | 0.00096525 | SELECT table_name, engine FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'test_db' |
++----------+------------+-----------------------------------------------------------------------------------------+
 ```
 
 ## Задача 4 
