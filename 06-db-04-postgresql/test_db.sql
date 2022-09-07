@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.0 (Debian 13.0-1.pgdg100+1)
--- Dumped by pg_dump version 13.0 (Debian 13.0-1.pgdg100+1)
+-- Dumped from database version 13.8 (Debian 13.8-1.pgdg110+1)
+-- Dumped by pg_dump version 13.8 (Debian 13.8-1.pgdg110+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -65,7 +65,6 @@ ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.order
 --
 -- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
 --
-
 
 COPY public.orders (id, title, price) FROM stdin;
 1	War and peace	100
