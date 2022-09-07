@@ -133,6 +133,11 @@ COMMIT;
 
 Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца `title` для таблиц `test_database`?
 
+### **Ответ:**
+```
+ALTER TABLE public.orders
+    ADD CONSTRAINT unic_title UNIQUE (title);
+```
 ---
 
 ### Как cдавать задание
