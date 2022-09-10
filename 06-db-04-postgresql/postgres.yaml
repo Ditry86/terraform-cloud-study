@@ -16,3 +16,4 @@ services:
       - .:/tmp
     environment:
       POSTGRES_PASSWORD: qwertyuiop      
+      

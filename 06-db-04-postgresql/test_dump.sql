@@ -66,6 +66,7 @@ ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.order
 -- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+
 COPY public.orders (id, title, price) FROM stdin;
 1	War and peace	100
 2	My little database	500
