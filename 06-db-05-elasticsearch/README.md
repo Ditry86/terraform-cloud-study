@@ -96,6 +96,19 @@ curl -X GET "localhost:9200/"
 
 Удалите все индексы.
 
+### **Ответ:**
+
+```
+
+$ http localhost:9200/_cat/indices
+HTTP/1.1 200 OK
+...
+green  open ind-1            g7GuSDqySrS2EdRcBjI1fg 1 0  0 0   226b   226b
+yellow open ind-3            iiwFlbvsTOu735P-HHTgHA 4 2  0 0   904b   904b
+yellow open ind-2            Ys3EWmQ5TMGa0sMPq24z6g 2 1  0 0   452b   452b
+```
+Состояние индексов "желтый" и такое же состояние кластера указывает на то, что для для созданных индексов имеется какое-то количесвто реплик не соответствующее необходимому (primary shards = replics).
+
 **Важно**
 
 При проектировании кластера elasticsearch нужно корректно рассчитывать количество реплик и шард,
