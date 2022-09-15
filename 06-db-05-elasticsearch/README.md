@@ -48,7 +48,7 @@
       logs: /var/lib/log/elasticsearch
     node.name: "netology_test"
     ```
-- Образ elasticsearch: https://hub.docker.com/r/ditry86/elasticsearch/tags
+- Образ [elasticsearch](https://hub.docker.com/layers/ditry86/elasticsearch/7.17.6/images/sha256-59be873b52aa358fb955c07cd70fe8998566e88cc4cce4c102dfeeb0d845e574?context=repo)
 - Ответ elasticsearch:
 
 ```
@@ -143,6 +143,94 @@ yellow open ind-2            Ys3EWmQ5TMGa0sMPq24z6g 2 1  0 0   452b   452b
 
 Подсказки:
 - возможно вам понадобится доработать `elasticsearch.yml` в части директивы `path.repo` и перезапустить `elasticsearch`
+
+
+### **Ответ:**
+
+- Регистрация и создание репозитория:
+
+```
+$ http put localhost:9200/_snapshot/netology_backup type=fs settings:='{"location":"snapshots"}'
+HTTP/1.1 200 OK
+...
+X-elastic-product: Elasticsearch
+content-encoding: gzip
+content-length: 47
+content-type: application/json; charset=UTF-8
+
+{
+    "acknowledged": true
+}
+```
+- Создание индекса `test`:
+```
+$ http put localhost:9200/test settings:='{"index":{"number_of_shards":1,"number_of_replicas":0}}'
+HTTP/1.1 200 OK
+...
+X-elastic-product: Elasticsearch
+content-encoding: gzip
+content-length: 71
+content-type: application/json; charset=UTF-8
+
+{
+    "acknowledged": true,
+    "index": "test",
+    "shards_acknowledged": true
+}
+```
+
+- Список файлов:
+
+```
+docker exec elasticsearch bash -c 'ls ${HOME}/snapshots'
+index-4
+index.latest
+indices
+meta-sJWW1ZFOSomu37svYh0okw.dat
+snap-sJWW1ZFOSomu37svYh0okw.dat
+```
+
+- Список индексов:
+```
+$ http localhost:9200/_cat/indices
+HTTP/1.1 200 OK
+...
+X-elastic-product: Elasticsearch
+content-encoding: gzip
+content-length: 137
+content-type: text/plain; charset=UTF-8
+
+green open .geoip_databases su-YXIVTS1m3p3IL61ODng 1 0 41 0 38.7mb 38.7mb
+green open test-2           enS9818ZSXaLYhr5GsO9hw 1 0  0 0   226b   226b
+```
+
+- Восстановление из snapshot'а и список индексов (поскольку на ноде кроме созданных индексов так же создан при установке и активен системный индекс .geoip_database, то при восстановлении указываем индекс test):
+
+```
+$ http post localhost:9200/_snapshot/netology_backup/snap_1_/_restore indices=test
+HTTP/1.1 200 OK
+...
+X-elastic-product: Elasticsearch
+content-encoding: gzip
+content-length: 43
+content-type: application/json; charset=UTF-8
+
+{
+    "accepted": true
+}
+
+$ http localhost:9200/_cat/indices
+HTTP/1.1 200 OK
+...
+X-elastic-product: Elasticsearch
+content-encoding: gzip
+content-length: 167
+content-type: text/plain; charset=UTF-8
+
+green open .geoip_databases su-YXIVTS1m3p3IL61ODng 1 0 41 0 38.7mb 38.7mb
+green open test-2           enS9818ZSXaLYhr5GsO9hw 1 0  0 0   226b   226b
+green open test             NSjsiZ1IRp2XTT34F-1OzA 1 0  0 0   226b   226b
+```
 
 ---
 
