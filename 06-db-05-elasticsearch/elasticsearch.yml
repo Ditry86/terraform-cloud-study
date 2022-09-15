@@ -1,6 +1,6 @@
 cluster.name: "docker-cluster"
 network.host: 0.0.0.0
 path:
-  data: /var/lib/data/elasticsearch
-  logs: /var/lib/log/elasticsearch
+  data: /var/lib/data
+  logs: /var/lib/logs
 node.name: "netology_test"

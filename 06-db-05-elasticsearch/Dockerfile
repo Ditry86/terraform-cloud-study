@@ -1,2 +1,7 @@
 FROM elasticsearch:7.17.6
-COPY ./elasticsearch.yml /usr/share/elasticsearch/config/elasticsearch.yml
+USER root
+RUN mkdir -p -m 775 /var/lib/{data,logs}
+RUN chown -R 1000:1000 /var/lib/{data,logs}
+ADD elasticsearch.yml /usr/share/elasticsearch/config/
+RUN chown 1000:1000 config/elasticsearch.yml 
+USER elasticsearch

@@ -2,17 +2,18 @@
 version: '3.1'
 
 volumes:
-  data_v: {}
-
+  data_elastic: {}
+  logs_elastic: {}
 services:
 
   elastic:
-    image: ditry86/elasticsearch:7.17.6_3
+    image: ditry86/elasticsearch:7.17.6
     container_name: elasticsearch
     # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
     # (this is just an example, not intended to be a production configuration)
     volumes:
-      - data_v:/var
+      - data_elastic:/var/lib/data
+      - logs_elastic:/var/lib/logs
     ports:
       - "9200:9200"
       - "9300:9300"
