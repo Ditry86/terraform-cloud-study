@@ -1,0 +1,4 @@
+./vars.conf
+./inst_meta.conf
+./*key*
+./.terraform*

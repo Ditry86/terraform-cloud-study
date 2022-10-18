@@ -11,5 +11,5 @@ output "external_ip" {
 }
 
 output "instance_user" {
-  value = "user "+substr(yandex_compute_instance.netology-1.metadata.user-data, 25, 13)
+  value = substr(yandex_compute_instance.netology-1.metadata.user-data, 31, 8)
 }
