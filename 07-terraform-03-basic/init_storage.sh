@@ -7,7 +7,7 @@ bucket=$(cat init.conf | grep bucket | sed 's/bucket = //')
 
 echo $'\n''Init storage admin account...'
 stor_serv_acc_id=$(yc iam service-account create --name ${storage_account} --folder-id ${folder_id} | grep ^id: | sed 's/id: //')
-yc resource-manager folder add-access-binding default --role="editor" --subject="serviceAccount:${stor_serv_acc_id}"
+yc resource-manager folder add-access-binding default --role="storage.admin" --subject="serviceAccount:${stor_serv_acc_id}"
 yc iam access-key create --service-account-name=${storage_account} >> access.key
 
 echo $'\n''Get storage admin account access key...'
@@ -36,15 +36,16 @@ terraform init
 
 terraform apply
 
-echo $'\n''Init main.tf file'
+echo $'\n''Init root.tf file'
 
 cd .. && rm -r temp_module
-cat > ./main.tf << _EOF_
+cat > ./root.tf << _EOF_
 terraform {
   backend "s3" {
     endpoint   = "storage.yandexcloud.net"
     bucket     = "${bucket}"
-    key        = "07-terraform/main.tfstate"
+    region     = "$YC_ZONE"
+    key        = "07-terraform/root.tfstate"
     access_key = "${access_key}"
     secret_key = "${secret_key}"
     skip_region_validation      = true
