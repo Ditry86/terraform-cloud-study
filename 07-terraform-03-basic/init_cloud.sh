@@ -13,9 +13,3 @@ yc config profile create $service_account
 yc config set service-account-key key.json
 yc config set cloud-id $cloud_id
 yc config set folder-id $folder_id
-
-echo $'\n'Set env vars...
-export YC_TOKEN=$(yc iam create-token)
-export YC_CLOUD_ID=$cloud_id
-export YC_FOLDER_ID=$folder_id
-export YC_ZONE=$(cat init.conf | grep zone | sed 's/zone = //')

@@ -63,7 +63,4 @@ data "yandex_compute_image" "ubuntu_22" {
 }
 _EOF_
 terraform init --input=false 
-
-
-
-
+cd ..
