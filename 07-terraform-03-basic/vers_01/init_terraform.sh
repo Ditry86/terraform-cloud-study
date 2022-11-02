@@ -16,8 +16,9 @@ secret_key=$(cat access.key | grep secret: | sed 's/secret: //')
 rm access.key
 
 echo $'\n''Create bucket in cloud storage...'
+cd terraform
 mkdir temp_module && cd temp_module
-cat > ./main.tf << _EOF_
+cat > main.tf << _EOF_
 terraform {
   required_providers {
     yandex = {
@@ -32,25 +33,37 @@ resource "yandex_storage_bucket" "backet" {
   bucket     = "${bucket}"
 }
 _EOF_
-terraform init
+terraform init --input=false 
+terraform plan -out=tfplan -input=false 
+terraform apply --input=false tfplan
 
-terraform apply
-
-echo $'\n''Init root.tf file'
+echo $'\n''Init main.tf file'
 
 cd .. && rm -r temp_module
-cat > ./root.tf << _EOF_
+terraform workspace new stage
+terraform workspace new prod
+workspace = $(terraform_07_03_subnet)
+cat > main.tf << _EOF_
 terraform {
   backend "s3" {
     endpoint   = "storage.yandexcloud.net"
     bucket     = "${bucket}"
-    region     = "$YC_ZONE"
-    key        = "07-terraform/root.tfstate"
+    region     = "${YC_ZONE}"
+    workspace_key_prefix = "07-terraform-03"
+    key        = "main.tfstate"
     access_key = "${access_key}"
     secret_key = "${secret_key}"
     skip_region_validation      = true
     skip_credentials_validation = true
   }
 }
+
+data "yandex_compute_image" "ubuntu_22" {
+  family = "ubuntu-2204-lts"
+}
 _EOF_
-terraform init
+terraform init --input=false 
+
+
+
+
