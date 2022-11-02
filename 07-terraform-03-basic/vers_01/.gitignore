@@ -1,0 +1,7 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+**/init.conf
+**/key.json
+**/.terraform/
+**/*.tfstate
