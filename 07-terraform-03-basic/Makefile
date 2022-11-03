@@ -8,7 +8,7 @@ start_stage: stage plan apply
 deploy: plan apply
 
 cloud:
-	export YC_ZONE="ya-ru" && source ./init_cloud.sh
+	source ./init_cloud.sh
 
 env:
 	source ./reinit_env.sh
@@ -26,7 +26,7 @@ workspace:
 	cd ./terraform && terraform workspace new prod && terraform workspace new stage
 
 plan: 
-	source ./reinit_env.sh && cd ./terraform && terraform plan
+	source ./reinit_env.sh && cd ./terraform && terraform plan -out=terraform.tfplan
 
 apply: 
 	source ./reinit_env.sh && cd ./terraform && terraform apply -auto-approve

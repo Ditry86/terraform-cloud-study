@@ -6,7 +6,7 @@ folder_id=$(cat init.conf | grep folder_id | sed 's/folder_id = //')
 bucket=$(cat init.conf | grep bucket | sed 's/bucket = //')
 
 echo $'\n''Init storage admin account...'
-stor_serv_acc_id=$(yc iam service-account create --name ${storage_account} --folder-id ${folder_id} | grep ^id: | sed 's/id: //')
+stor_serv_acc_id=$(yc iam service-account create ${storage_account} --folder-id ${folder_id} | grep ^id: | sed 's/id: //')
 yc resource-manager folder add-access-binding default --role="storage.admin" --subject="serviceAccount:${stor_serv_acc_id}"
 yc iam access-key create --service-account-name=${storage_account} >> access.key
 
@@ -34,15 +34,11 @@ resource "yandex_storage_bucket" "backet" {
 }
 _EOF_
 terraform init --input=false 
-terraform plan -out=tfplan -input=false 
+terraform plan -out=tfplan --input=false 
 terraform apply --input=false tfplan
 
 echo $'\n''Init main.tf file'
-
 cd .. && rm -r temp_module
-terraform workspace new stage
-terraform workspace new prod
-workspace = $(terraform_07_03_subnet)
 cat > main.tf << _EOF_
 terraform {
   backend "s3" {
