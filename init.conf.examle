@@ -2,8 +2,6 @@ oa_token =
 cloud_id = 
 folder_id = 
 zone = 
-service_account =
+service_account = 
 storage_account = 
-bucket =
-
-
+bucket = 
