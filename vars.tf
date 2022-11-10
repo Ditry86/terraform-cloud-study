@@ -1,16 +1,28 @@
-variable "yc_folder_id" {
+variable "token" {
     default=""
 }
 
-variable "yc_token" {
+variable "folder_id" {
     default=""
 }
 
-variable "yc_cloud_id" {
+variable "cloud_id" {
     default=""
 }
 
-variable "yc_zone" {
+variable "zone" {
+    default=""
+}
+
+variable "bucket" {
+    default=""
+}
+
+variable "access_key" {
+    default=""
+}
+
+variable "secret_key" {
     default=""
 }
 

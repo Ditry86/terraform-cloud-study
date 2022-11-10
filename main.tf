@@ -1,17 +1,25 @@
-terraform {
-  backend "s3" {
-    endpoint   = "storage.yandexcloud.net"
-    bucket     = "terraform-07-bucket"
-    region     = "ru-central1-a"
-    workspace_key_prefix = "07-terraform-03"
-    key        = "main.tfstate"
-    access_key = "YCAJEfYypNp-SXjEheTKbK6sk"
-    secret_key = "YCMVRUQKOxqAAH9nb-STvJMpXyR0GDgswqBz7FJZ"
-    skip_region_validation      = true
-    skip_credentials_validation = true
-  }
+provider "yandex" {
+  token                    = var.token
+  cloud_id                 = var.cloud_id
+  folder_id                = var.folder_id
+  zone                     = var.zone
 }
 
 data "yandex_compute_image" "ubuntu_22" {
   family = "ubuntu-2204-lts"
+}
+
+data "terraform_remote_state" "yandex-storage" {
+  backend = "s3"
+  config = {
+    endpoint   = "storage.yandexcloud.net"
+    bucket     = var.bucket
+    region     = var.zone
+    workspace_key_prefix = "07-terraform-03"
+    key        = "main.tfstate"
+    access_key = var.access_key
+    secret_key = var.secret_key
+    skip_region_validation      = true
+    skip_credentials_validation = true
+  }
 }
